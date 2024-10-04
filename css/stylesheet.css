@@ -1,0 +1,46 @@
+.contenedor {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.selectores {
+    width: 40%;
+}
+
+.resistencia-img {
+    position: relative;
+    width: 100%; 
+    max-width: 400px; 
+}
+
+.resischiquita {
+    width: 100%; 
+}
+
+.banda {
+    position: absolute;
+    top: 45%; 
+    height: 50px;
+    width: 15px; 
+    background-color: transparent;
+}
+
+#banda1 { left: 15%; }
+#banda2 { left: 30%; }
+#banda3 { left: 45%; }
+#banda4 { left: 60%; }
+#banda5 { left: 75%; }
+#banda6 { left: 90%; }
+
+@media (max-width: 768px) {
+    .contenedor {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .selectores, .resistencia-img {
+        width: 90%;
+        margin-bottom: 20px;
+    }
+}
