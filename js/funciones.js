@@ -2,7 +2,7 @@ function nbandas() {
     const bandasSelect = document.getElementById('bandas');
     const valorSeleccionado = bandasSelect.value;
     const container = document.getElementById('band-container');
-    const bandas = document.querySelectorAll('.banda'); 
+    const bandas = document.querySelectorAll('.banda');
 
     container.innerHTML = '';
 
@@ -19,41 +19,52 @@ function nbandas() {
     } else if (valorSeleccionado === "3") {
         numBands = 6;
     } else {
-        return; 
+        return;
     }
 
     const colores = [
-        { nombre: 'Negro', valor: 'black' },
-        { nombre: 'Café', valor: 'brown' },
-        { nombre: 'Rojo', valor: 'red' },
-        { nombre: 'Naranja', valor: 'orange' },
-        { nombre: 'Amarillo', valor: 'yellow' },
-        { nombre: 'Verde', valor: 'green' },
-        { nombre: 'Azul', valor: 'blue' },
-        { nombre: 'Morado', valor: 'purple' },
-        { nombre: 'Gris', valor: 'gray' },
-        { nombre: 'Blanco', valor: 'white' },
-        { nombre: 'Dorado', valor: 'gold' },
-        { nombre: 'Plateado', valor: 'silver' }
+        { nombre: 'Negro', valor: 'black', multiplicador: 1, sig: 0 },
+        { nombre: 'Café', valor: 'brown', multiplicador: 10, sig: 1 },
+        { nombre: 'Rojo', valor: 'red', multiplicador: 100, sig: 2 },
+        { nombre: 'Naranja', valor: 'orange', multiplicador: 1000, sig: 3 },
+        { nombre: 'Amarillo', valor: 'yellow', multiplicador: 10000, sig: 4 },
+        { nombre: 'Verde', valor: 'green', multiplicador: 100000, sig: 5 },
+        { nombre: 'Azul', valor: 'blue', multiplicador: 1000000, sig: 6 },
+        { nombre: 'Morado', valor: 'purple', multiplicador: 10000000, sig: 7 },
+        { nombre: 'Gris', valor: 'gray', multiplicador: null, sig: 8 },
+        { nombre: 'Blanco', valor: 'white', multiplicador: null, sig: 9 },
+        { nombre: 'Dorado', valor: 'gold', multiplicador: 0.1, sig: null },
+        { nombre: 'Plateado', valor: 'silver', multiplicador: 0.01, sig: null }
     ];
 
     for (let i = 1; i <= numBands; i++) {
         const newSelect = document.createElement('select');
         newSelect.className = 'form-select form-select-sm';
         newSelect.innerHTML = '<option selected>Selecciona el color</option>';
-        
+
         colores.forEach(color => {
             const option = document.createElement('option');
-            option.value = color.valor; 
+            option.value = i <= 3 ? color.sig : color.multiplicador;
             option.text = color.nombre;
             newSelect.appendChild(option);
         });
 
         newSelect.addEventListener('change', function() {
             const banda = document.getElementById(`banda${i}`);
-            banda.style.backgroundColor = this.value; 
+            banda.style.backgroundColor = this.options[this.selectedIndex].text.toLowerCase();
         });
 
         container.appendChild(newSelect);
     }
+}
+
+function calcularResistencia() {
+    const selects = document.querySelectorAll('#band-container select');
+    const banda1 = parseInt(selects[0].value);
+    const banda2 = parseInt(selects[1].value);
+    const multiplicador = parseFloat(selects[2].value);
+
+    const resistencia = ((banda1 * 10) + banda2) * multiplicador;
+
+    document.getElementById('resultado').textContent = `Valor de la resistencia: ${resistencia} Ω`;
 }
